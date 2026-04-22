@@ -117,7 +117,29 @@ Ctrl + F5
 
 ## 📸 Screenshots
 
+#### 🔶   Home Page
+> <img width="1418" height="949" alt="Home Page" src="https://github.com/user-attachments/assets/3b22a4a1-505b-4669-9502-3aefffb759d9" />
 
+#### 🔶   Events Dashboard
+> <img width="1392" height="950" alt="Event Dashboard" src="https://github.com/user-attachments/assets/70bc9e80-c5c1-4c2f-bc20-cf88e2e52474" />
+
+#### 🔶   Create New Event
+> <img width="976" height="669" alt="Create New event" src="https://github.com/user-attachments/assets/7a80f976-cc55-4ef3-a604-c0fc29470748" />
+
+#### 🔶   Single Event Details
+> <img width="1327" height="940" alt="Single Event" src="https://github.com/user-attachments/assets/018ed1bc-0d63-4890-b99e-a5a56f827a54" />
+> <img width="1343" height="934" alt="Seperate Event details" src="https://github.com/user-attachments/assets/ea1b8e42-6932-4f60-a8d2-32c6b7ab0e74" />
+
+#### 🔶   Create New Member
+> <p align="center">
+>  <img src="https://github.com/user-attachments/assets/cb835ae3-ad33-4d03-bf21-7bb78f59eefa" width="500"/>
+> </p>
+
+#### 🔶   Add Cost Items
+> <img width="1386" height="937" alt="Add Cost Item" src="https://github.com/user-attachments/assets/d9882ede-3545-4f04-9ec1-fb0f59d59dd0" />
+
+#### 🔶   All Events Details
+> <img width="1354" height="942" alt="All Event total Member and details" src="https://github.com/user-attachments/assets/0ef9d030-ad21-44ad-a6b6-5112c06b04f3" />
 
 ---
 
