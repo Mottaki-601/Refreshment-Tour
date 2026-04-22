@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Add Image";
+}
+
+<div class="row mt-5">
+    <div class="col-md-4 mx-auto shadow-lg p-4 rounded bg-white">
+        <h3 class="display-6 text-center text-primary mb-4">Upload Gallery Image</h3>
+
+        <form asp-action="Create" asp-controller="Gallery" method="post" enctype="multipart/form-data">
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Select Image</label>
+                <input type="file" name="ImageFile" class="form-control" accept="image/*" required />
+                <small class="text-muted">JPG, PNG বা GIF ফাইল সিলেক্ট করুন।</small>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-upload"></i> Upload to Gallery
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="fa fa-arrow-left"></i> Back to Gallery
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

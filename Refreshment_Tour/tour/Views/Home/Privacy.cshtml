@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<div class="privacy-bg d-flex justify-content-center align-items-center">
+
+    <div class="privacy-card p-5 shadow-lg">
+
+        <h1 class="text-center fw-bold mb-4 privacy-title">
+            🔐 Privacy Policy
+        </h1>
+
+        <p class="text-muted text-center mb-4">
+            Your privacy is important to us. This page explains how we collect, use, and protect your information.
+        </p>
+
+        <div class="policy-section">
+            <h5>📌 Information We Collect</h5>
+            <p>We may collect your name, email, and other necessary details to improve our services.</p>
+        </div>
+
+        <div class="policy-section">
+            <h5>⚙️ How We Use Data</h5>
+            <p>Your information helps us provide better features, manage events, and enhance user experience.</p>
+        </div>
+
+        <div class="policy-section">
+            <h5>🔒 Data Protection</h5>
+            <p>We take appropriate security measures to protect your data from unauthorized access.</p>
+        </div>
+
+        <div class="policy-section">
+            <h5>📅 Updates</h5>
+            <p>This policy may be updated occasionally. Please review it regularly.</p>
+        </div>
+
+        <div class="text-center mt-4">
+            <small class="text-muted">Last updated: @DateTime.Now.ToString("dd MMM yyyy")</small>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+.privacy-bg {
+    min-height: 90vh;
+    background: linear-gradient(135deg,#eef2f3,#dfe9f3);
+}
+
+.privacy-card {
+    max-width: 650px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: 0.3s;
+}
+
+.privacy-card:hover {
+    transform: translateY(-5px);
+}
+
+.privacy-title {
+    background: linear-gradient(90deg,#6a11cb,#2575fc,#ff6a00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.policy-section {
+    background: rgba(0,0,0,0.03);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: 0.3s;
+}
+
+.policy-section:hover {
+    background: rgba(106,17,203,0.08);
+}
+
+.policy-section h5 {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+</style>

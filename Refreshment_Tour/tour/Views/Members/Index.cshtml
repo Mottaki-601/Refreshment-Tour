@@ -1,0 +1,409 @@
+﻿@model IEnumerable<tour.Models.Member>
+@{
+    var totalCollection = Model.Sum(x => x.Amount);
+
+    decimal totalCost = 0;
+    decimal maxCost = 0;
+    decimal minCost = 0;
+    decimal averageCost = 0;
+    int costCount = 0;
+
+    var costsList = ViewBag.Costs as List<tour.Models.Cost>;
+
+    if (costsList != null && costsList.Any())
+    {
+        totalCost = costsList.Sum(c => c.Quantity * c.CostAmount);
+        maxCost = costsList.Max(c => c.Quantity * c.CostAmount);
+        minCost = costsList.Min(c => c.Quantity * c.CostAmount);
+        averageCost = costsList.Average(c => c.Quantity * c.CostAmount);
+        costCount = costsList.Count;
+    }
+
+    var netBalance = totalCollection - totalCost;
+}
+
+<style>
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .member-card {
+        border-radius: 15px;
+        background: #ffffff;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+    .summary-card {
+        border-radius: 15px;
+        border: none;
+        color: white;
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #4e73df, #224abe);
+    }
+
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #1cc88a, #13855c);
+    }
+
+    .bg-gradient-danger {
+        background: linear-gradient(135deg, #e74a3b, #be2617);
+    }
+
+    .profile-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #eee;
+        transition: transform 0.3s;
+    }
+
+        .profile-img:hover {
+            transform: scale(1.1);
+        }
+
+    .badge-custom {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.7rem;
+        border-radius: 12px;
+    }
+</style>
+
+
+
+<div class="container py-4">
+   
+    <div class="position-relative p-4 rounded-4 shadow-lg mb-4 overflow-hidden"
+         style="
+        background: linear-gradient(135deg, #fdfbfb, #ebedee);
+        border-left: 5px solid #6a11cb;
+     ">
+
+        <div class="position-absolute top-0 end-0"
+             style="
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #6a11cb33, transparent 70%);
+            filter: blur(20px);
+         ">
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center position-relative">
+
+            <div>
+                <h2 class="fw-bold mb-1 d-flex align-items-center gap-2"
+                    style="letter-spacing: 0.5px;">
+
+                    <span style="
+                    background: linear-gradient(90deg, #6a11cb, #2575fc);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;">
+                        👥 Tour Member List
+                    </span>
+                </h2>
+
+                <p class="text-muted mb-0 small d-flex align-items-center gap-2">
+                    <span>Total</span>
+
+                    <span class="px-3 py-1 rounded-pill fw-bold text-white"
+                          style="
+                        background: linear-gradient(135deg, #ff6a00, #ee0979);
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+                      ">
+                        @Model.Count()
+                    </span>
+
+                    <span>members are connected</span>
+                </p>
+            </div>
+
+            <div class="d-none d-md-flex align-items-center justify-content-center rounded-circle"
+                 style="
+                width: 55px;
+                height: 55px;
+                background: linear-gradient(135deg, #6a11cb, #2575fc);
+                color: white;
+                font-size: 22px;
+                box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+             ">
+                <i class="fa fa-users"></i>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row g-3 mb-5">
+        <div class="col-md-4">
+            <div class="card summary-card bg-gradient-primary shadow p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-1">total collection</p>
+                        <h3 class="fw-bold mb-0">@totalCollection.ToString("N2") Tk.</h3>
+                    </div>
+                    <i class="fa fa-money-bill-wave fa-2x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card summary-card bg-gradient-danger shadow p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-1">Total Cost</p>
+                        <h3 class="fw-bold mb-0">@totalCost.ToString("N2") Tk.</h3>
+                    </div>
+                    <i class="fa fa-shopping-cart fa-2x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card summary-card bg-gradient-success shadow p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-1">Net Balance</p>
+                        <h3 class="fw-bold mb-0"><span id="netTotal">@netBalance.ToString("N2")</span> Tk.</h3>
+                    </div>
+                    <i class="fa fa-wallet fa-2x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            @await Component.InvokeAsync("PaymentStatus", new { members = Model })
+        </div>
+
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-12">
+            <div class="card border-0 shadow-sm p-3 bg-light">
+                <h6 class="fw-bold text-danger mb-3">
+                    <i class="fa fa-calculator me-2"></i>
+                    Cost Analytics (Based on Qty × Unit)
+                </h6>
+
+                <div class="row text-center">
+                    <div class="col-md-3 border-end">
+                        <span class="text-muted small d-block">Maximum Item Total</span>
+                        <span class="fw-bold text-dark">
+                            @maxCost.ToString("N2") Tk
+                        </span>
+                    </div>
+
+                    <div class="col-md-3 border-end">
+                        <span class="text-muted small d-block">Minimum Item Total</span>
+                        <span class="fw-bold text-dark">
+                            @minCost.ToString("N2") Tk
+                        </span>
+                    </div>
+
+                    <div class="col-md-3 border-end">
+                        <span class="text-muted small d-block">Average Item Total</span>
+                        <span class="fw-bold text-dark">
+                            @averageCost.ToString("N2") Tk
+                        </span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <span class="text-muted small d-block">Total Cost Categories</span>
+                        <span class="fw-bold text-dark">
+                            @costCount items
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="row mb-2">
+                <a asp-action="Create" asp-controller="Members" class="btn btn-primary rounded-pill px-4 shadow">
+                    <i class="fa fa-plus-circle me-2"></i> Add Member
+                </a>
+            </div>
+            <div class="row g-4">
+                @foreach (var item in Model)
+                {
+                    <div class="col-12">
+                        <div class="card member-card shadow-sm p-3 @(item.PaymentDone ? "border-start border-success border-4" : "border-start border-danger border-4")">
+                            <div class="row align-items-center g-3">
+                                <div class="col-auto">
+                                    @if (!string.IsNullOrEmpty(item.Image))
+                                    {
+                                        <img src="@item.Image" class="profile-img" />
+                                    }
+                                    else
+                                    {
+                                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <i class="fa fa-user text-secondary fa-2x"></i>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col">
+                                    <h5 class="fw-bold text-dark mb-1">@item.Name</h5>
+
+                                    <div class="mb-1">
+                                        @if (item.PaymentDone)
+                                        {
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle small">Paid</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle small">Unpaid</span>
+                                        }
+                                    </div>
+
+                                    <p class="text-muted small mb-0 mt-1">Submitted: <span class="fw-bold text-primary">@item.Amount.ToString("N0") Tk</span></p>
+                                </div>
+                                <div class="col-auto border-start ps-3">
+                                    <div class="d-flex flex-column gap-2">
+                                        <a asp-action="Edit" asp-route-id="@item.MemberId" class="btn btn-sm btn-outline-success rounded-pill">Edit</a>
+
+                                        <form asp-action="Delete" asp-controller="Members" method="post"
+                                              onsubmit="return confirm('Are you sure you want to delete this member?');">
+                                            <input type="hidden" name="id" value="@item.MemberId" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                                                <i class="fa fa-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="sticky-top" style="top: 43px; z-index: 100;">
+                <div class="row mb-2 ms-1">
+                    <a asp-action="AddCost" asp-controller="Members"
+                       class="btn btn-primary rounded-pill px-4 shadow">
+                        <i class="fa fa-plus-circle me-2"></i> Add Cost Item
+                    </a>
+                </div>
+
+                <h4 class="mb-3 fw-bold">Cost Items</h4>
+
+                <div class="card shadow-sm border-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th>Item</th>
+                                    <th class="text-center">Qty</th>
+                                    <th class="text-end">Unit</th>
+                                    <th class="text-end">Total</th>
+                                    <th class="text-center">Action</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int serial = 1;
+                                    decimal grandTotal = 0;
+                                }
+
+                                @if (ViewBag.Costs != null)
+                                {
+                                    foreach (var cost in (List<tour.Models.Cost>)ViewBag.Costs)
+                                    {
+                                        var itemTotal = cost.Quantity * cost.CostAmount;
+                                        grandTotal += itemTotal;
+
+                                        <tr>
+                                            <td>@serial</td>
+                                            <td>@cost.CostDate.ToString("dd MMM yyyy")</td>
+                                            <td>@cost.CostItem</td>
+                                            <td class="text-center">@cost.Quantity</td>
+                                            <td class="text-end">@cost.CostAmount.ToString("N2")</td>
+                                            <td class="text-end fw-bold">
+                                                @itemTotal.ToString("N2")
+                                            </td>
+
+                                            <td class="text-center">
+                                                <form asp-action="DeleteCost"
+                                                      asp-controller="Members"
+                                                      method="post"
+                                                      onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                                    <input type="hidden" name="id" value="@cost.CostId" />
+                                                    <button type="submit"
+                                                            class="btn btn-sm btn-danger">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+
+                                        serial++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted">
+                                            No data
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                            <tfoot class="table-light fw-bold">
+                                <tr>
+                                    <td colspan="5" class="text-end">Total Cost:</td>
+                                    <td class="text-end text-danger">
+                                        @grandTotal.ToString("N2") Tk.
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updateNetTotal() {
+            let collection = parseFloat("@totalCollection");
+            let cost = parseFloat("@totalCost");
+
+            let costDisplay = document.getElementById("totalCostDisplay");
+            if (costDisplay) {
+                costDisplay.innerText = cost.toLocaleString('en-US', { minimumFractionDigits: 2 });
+            }
+
+            let net = collection - cost;
+            let netElement = document.getElementById("netTotal");
+
+            if (netElement) {
+                netElement.innerText = net.toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+                if (net < 0) {
+                    netElement.closest('.card').classList.replace("bg-gradient-success", "bg-gradient-danger");
+                } else {
+                    netElement.closest('.card').classList.replace("bg-gradient-danger", "bg-gradient-success");
+                }
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', updateNetTotal);
+    </script>
+}

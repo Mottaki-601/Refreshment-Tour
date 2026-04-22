@@ -1,0 +1,126 @@
+﻿<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold mb-1"
+            style="background: linear-gradient(90deg,#6a11cb,#2575fc,#ff6a00);
+                   -webkit-background-clip: text;
+                   -webkit-text-fill-color: transparent;">
+             Events Dashboard
+        </h2>
+        <small class="text-muted">Manage all your tour events in one place</small>
+    </div>
+
+    <a asp-action="Create"
+       class="btn px-4 py-2 text-white shadow-lg rounded-pill position-relative overflow-hidden add-btn">
+        <i class="fa fa-plus me-1"></i> Add Event
+    </a>
+
+</div>
+
+<div class="row g-4">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+
+            <div class="glass-card p-4 position-relative">
+
+                <div class="glow"></div>
+
+                <div class="position-relative">
+
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <div class="dot"></div>
+                        <h5 class="fw-bold mb-0">@item.EventName</h5>
+                    </div>
+
+                    <p class="text-muted small mb-3">
+                        ✨ Explore details of this amazing event
+                    </p>
+
+                    <a asp-action="Details"
+                       asp-route-id="@item.EventId"
+                       class="btn btn-sm px-4 text-white rounded-pill open-btn">
+                        <i class="fa fa-arrow-right me-1"></i> Open
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+<style>
+
+    .add-btn {
+        background: linear-gradient(135deg,#ff6a00,#ee0979,#2575fc);
+        background-size: 200% 200%;
+        animation: move 4s ease infinite;
+        transition: 0.3s;
+    }
+
+        .add-btn:hover {
+            transform: scale(1.05);
+        }
+
+    .glass-card {
+        border-radius: 22px;
+        background: rgba(255,255,255,0.55);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        transition: 0.4s;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+    .glow {
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle,#6a11cb55,#2575fc00);
+        filter: blur(20px);
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#ff6a00,#ee0979);
+    }
+
+    .open-btn {
+        background: linear-gradient(135deg,#2575fc,#6a11cb);
+        transition: 0.3s;
+    }
+
+        .open-btn:hover {
+            transform: scale(1.05);
+        }
+
+    @@keyframes move {
+        0%
+
+    {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+
+    }
+</style>

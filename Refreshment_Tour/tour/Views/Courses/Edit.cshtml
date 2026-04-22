@@ -1,0 +1,129 @@
+﻿@model tour.Models.Course
+
+@{
+    ViewData["Title"] = "Edit Course";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height:80vh;">
+
+    <div class="glass-edit-card p-5 shadow-lg">
+
+        <h2 class="text-center fw-bold mb-4"
+            style="background: linear-gradient(90deg,#6a11cb,#2575fc,#ff6a00);
+                   -webkit-background-clip: text;
+                   -webkit-text-fill-color: transparent;">
+            ✏️ Edit Course
+        </h2>
+
+        <form asp-action="Edit">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <input type="hidden" asp-for="CourseId" />
+
+            <div class="mb-4 position-relative">
+                <input asp-for="CourseName" class="form-control modern-input" placeholder=" " />
+                <label asp-for="CourseName" class="floating-label">Course Name</label>
+                <span asp-validation-for="CourseName" class="text-danger small"></span>
+            </div>
+
+            <div class="d-flex gap-2 justify-content-center">
+
+                <button type="submit" class="btn btn-save px-4">
+                    💾 Save Changes
+                </button>
+
+                <a asp-action="Index" class="btn btn-back px-4">
+                    ← Back
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+
+    .glass-edit-card {
+        width: 450px;
+        border-radius: 22px;
+        background: rgba(255,255,255,0.65);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.3);
+        transition: 0.3s;
+    }
+
+        .glass-edit-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .modern-input {
+        border-radius: 12px;
+        padding: 14px;
+        border: 1px solid #ddd;
+        transition: 0.3s;
+    }
+
+        .modern-input:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 10px rgba(106,17,203,0.2);
+        }
+
+    .floating-label {
+        position: absolute;
+        top: 12px;
+        left: 15px;
+        color: #999;
+        transition: 0.2s;
+        pointer-events: none;
+        background: white;
+        padding: 0 5px;
+    }
+
+    .modern-input:focus + .floating-label,
+    .modern-input:not(:placeholder-shown) + .floating-label {
+        top: -10px;
+        font-size: 12px;
+        color: #6a11cb;
+    }
+
+    .btn-save {
+        background: linear-gradient(135deg,#2575fc,#6a11cb,#ff6a00);
+        background-size: 200% 200%;
+        animation: move 4s ease infinite;
+        color: white;
+        border-radius: 50px;
+        border: none;
+    }
+
+    .btn-back {
+        background: #f1f1f1;
+        border-radius: 50px;
+    }
+
+    @@keyframes move {
+        0%
+
+    {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+
+    }
+</style>

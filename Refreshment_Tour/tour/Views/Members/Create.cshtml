@@ -1,0 +1,149 @@
+﻿@model MemberVM
+
+@{
+    ViewData["Title"] = "Create Member";
+}
+
+<div class="d-flex justify-content-center align-items-center member-bg">
+
+    <div class="glass-card p-5 shadow-lg">
+
+        <h2 class="text-center fw-bold mb-4 member-title">
+            👤 Add New Member
+        </h2>
+
+        <form asp-action="Create" asp-controller="Members" enctype="multipart/form-data" method="post">
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control modern-input" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="RollNo" class="form-label"></label>
+                    <input asp-for="RollNo" class="form-control modern-input" />
+                    <span asp-validation-for="RollNo" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="EventId" class="form-label">Event</label>
+                    <select asp-for="EventId" class="form-select modern-input"
+                            asp-items="@(new SelectList(ViewBag.Events, "EventId", "EventName"))">
+                        <option value="">-- Select Event --</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="CourseId" class="form-label">Course</label>
+                    <select asp-for="CourseId" class="form-select modern-input"
+                            asp-items="@(new SelectList(ViewBag.courses, "CourseId", "CourseName"))">
+                        <option value="">-- Select Course --</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Amount" class="form-label"></label>
+                    <input asp-for="Amount" class="form-control modern-input" />
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="ImageFile" class="form-label"></label>
+                    <input asp-for="ImageFile" type="file" class="form-control modern-input" />
+                </div>
+
+                <div class="col-md-12 d-flex align-items-center gap-2 mt-2">
+                    <input asp-for="PaymentDone" type="checkbox" class="form-check-input" />
+                    <label class="fw-bold text-success mb-0">Payment Completed</label>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-save w-100 mt-3">
+                        🚀 Save Member
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .member-bg {
+        min-height: 90vh;
+        background: linear-gradient(135deg,#f5f7fa,#e4e7ec);
+    }
+
+    .glass-card {
+        width: 500px;
+        border-radius: 22px;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255,255,255,0.4);
+        transition: 0.3s;
+    }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .member-title {
+        background: linear-gradient(90deg,#6a11cb,#2575fc,#ff6a00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .modern-input {
+        border-radius: 12px;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        transition: 0.3s;
+    }
+
+        .modern-input:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 10px rgba(106,17,203,0.2);
+        }
+
+    .btn-save {
+        background: linear-gradient(135deg,#ff6a00,#ee0979,#2575fc);
+        background-size: 200% 200%;
+        animation: move 4s ease infinite;
+        color: white;
+        border-radius: 50px;
+        border: none;
+        padding: 12px;
+        transition: 0.3s;
+    }
+
+        .btn-save:hover {
+            transform: scale(1.03);
+        }
+
+    @@keyframes move {
+        0%
+
+    {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+    }
+</style>

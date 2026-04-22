@@ -1,0 +1,100 @@
+﻿@model tour.Models.Course
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height:80vh;">
+
+    <div class="details-card p-5 shadow-lg">
+
+        <h2 class="fw-bold text-center mb-4"
+            style="background: linear-gradient(90deg,#6a11cb,#2575fc,#ff6a00);
+                   -webkit-background-clip: text;
+                   -webkit-text-fill-color: transparent;">
+            📚 Course Details
+        </h2>
+
+        <div class="info-box mb-4">
+
+            <div class="info-item">
+                <span class="label">Course Name</span>
+                <span class="value">🎓 @Model.CourseName</span>
+            </div>
+
+        </div>
+
+        <div class="d-flex gap-2 justify-content-center">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model?.CourseId"
+               class="btn btn-edit px-4">
+                ✏️ Edit
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-back px-4">
+                ← Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .details-card {
+        width: 450px;
+        border-radius: 22px;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.3);
+        transition: 0.3s;
+    }
+
+        .details-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .info-box {
+        background: rgba(106,17,203,0.05);
+        border: 1px solid rgba(106,17,203,0.2);
+        border-radius: 16px;
+        padding: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .label {
+        font-weight: 600;
+        color: #6b7280;
+    }
+
+    .value {
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg,#2575fc,#6a11cb);
+        color: white;
+        border-radius: 50px;
+        transition: 0.3s;
+    }
+
+        .btn-edit:hover {
+            transform: scale(1.05);
+        }
+
+    .btn-back {
+        background: #f1f1f1;
+        border-radius: 50px;
+    }
+
+</style>

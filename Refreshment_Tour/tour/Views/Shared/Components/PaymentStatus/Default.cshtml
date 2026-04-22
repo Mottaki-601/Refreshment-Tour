@@ -1,0 +1,29 @@
+﻿@model dynamic
+
+<div class="card summary-card bg-gradient-success shadow p-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <p class="mb-1 text-uppercase small opacity-75">Payment Completed</p>
+            <h3 class="fw-bold mb-0">@Model.Paid / @Model.Total জন</h3>
+        </div>
+        <i class="fa fa-check-circle fa-2x opacity-50"></i>
+    </div>
+
+    <div class="progress mt-3" style="height: 6px; background: rgba(255,255,255,0.2); border-radius: 10px;">
+        @{
+            var percentage = Model.Total > 0 ? (Model.Paid * 100 / Model.Total) : 0;
+        }
+        <div class="progress-bar bg-white shadow-sm"
+             role="progressbar"
+             style="width: @percentage%; border-radius: 10px;"
+             aria-valuenow="@percentage"
+             aria-valuemin="0"
+             aria-valuemax="100">
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-1">
+        <small class="opacity-75" style="font-size: 0.75rem;">Completed: @percentage%</small>
+        <small class="opacity-75" style="font-size: 0.75rem;">বাকি: @(Model.Total - Model.Paid) জন</small>
+    </div>
+</div>

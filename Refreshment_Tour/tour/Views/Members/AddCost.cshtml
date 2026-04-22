@@ -1,0 +1,141 @@
+﻿@model tour.Models.Cost
+@{
+    ViewData["Title"] = "Add Cost Item";
+}
+
+<style>
+    body {
+        background-color: #f7f9fc;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-card {
+        background: #fff;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .form-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+    .form-label {
+        font-weight: 600;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+        pointer-events: none;
+    }
+
+    .form-control {
+        padding-left: 2.5rem;
+        border-radius: 0.75rem;
+        border: 1px solid #ddd;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        }
+
+    .btn-gradient {
+        background: linear-gradient(135deg, #4e73df, #224abe);
+        color: #fff;
+        border-radius: 50px;
+        padding: 0.6rem 2rem;
+        transition: all 0.3s;
+    }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+    .text-danger {
+        font-size: 0.85rem;
+    }
+
+    h1 {
+        font-weight: 700;
+        color: #224abe;
+        margin-bottom: 1.5rem;
+    }
+</style>
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="form-card">
+
+                <h1>@ViewData["Title"]</h1>
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success rounded-pill text-center">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                <form asp-action="AddCost" method="post" novalidate>
+
+                    <div class="form-floating mb-3 position-relative">
+                        <input asp-for="CostItem" class="form-control" placeholder="Cost Item" />
+                        <label asp-for="CostItem">Cost Item</label>
+                        <i class="fa fa-box input-icon"></i>
+                        <span asp-validation-for="CostItem" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3 position-relative">
+                        <input asp-for="Quantity" type="number" min="1" class="form-control" placeholder="Quantity" />
+                        <label asp-for="Quantity">Quantity</label>
+                        <i class=" input-icon"></i>
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group row mb-2">
+                        <label asp-for="EventId" class="col-3 col-form-label">Select Event</label>
+                        <div class="col-7">
+                            <select asp-for="EventId" class="form-control"
+                                    asp-items="@(new SelectList(ViewBag.Events, "EventId", "EventName"))" required>
+                                <option value="">-- Choose Event --</option>
+                            </select>
+                            <span asp-validation-for="EventId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3 position-relative">
+                        <input asp-for="CostDate" type="date" class="form-control" placeholder="Cost Date" />
+                        <label asp-for="CostDate">Cost Date</label>
+                        <span asp-validation-for="CostDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-4 position-relative">
+                        <input asp-for="CostAmount" min="0" step="0.01" class="form-control" placeholder="Cost Amount" />
+                        <label asp-for="CostAmount">Unit Cost</label>
+                        <i class="fa fa-money-bill input-icon"></i>
+                        <span asp-validation-for="CostAmount" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-gradient w-100">
+                        <i class="fa fa-plus-circle me-2"></i> Add Cost
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
