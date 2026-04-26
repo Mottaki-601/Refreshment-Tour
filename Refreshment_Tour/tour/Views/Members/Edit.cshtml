@@ -1,85 +1,210 @@
 ﻿@model MemberVM
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Member";
 }
 
-<div class="row">
-    <form asp-action="Edit" asp-controller="Members" enctype="multipart/form-data" method="post">
-        <div class="d-flex justify-content-between">
-            <div class="col-6">
-                <h2>Add new Member</h2>
-                @Html.HiddenFor(x => x.MemberId)
-                @Html.HiddenFor(x=>x.Image)
-                @Html.HiddenFor(x => x.EventId)
-                <div class="row mb-2">
-                    <label asp-for="Name" class="col-form-label col-form-label-sm col-3"></label>
-                    <div class="col-7">
-                        <input asp-for="Name" class="form-control form-control-sm" />
-                    </div>
-                    <div class="col-2">
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                </div>
+<style>
+    .edit-card {
+        border-radius: 16px;
+        border: none;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
 
-                <div class="row mb-2">
-                    <label asp-for="RollNo" class="col-form-label col-form-label-sm col-3"></label>
-                    <div class="col-7">
-                        <input asp-for="RollNo" class="form-control form-control-sm" />
-                    </div>
-                    <div class="col-2">
-                        <span asp-validation-for="RollNo" class="text-danger"></span>
-                    </div>
-                </div>
+    .form-label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #444;
+    }
 
-                <div class="row mb-2">
-                    <label asp-for="Amount" class="col-form-label col-form-label-sm col-3"></label>
-                    <div class="col-7">
-                        <input asp-for="Amount" class="form-control form-control-sm" />
-                    </div>
-                    <div class="col-2">
-                        <span asp-validation-for="Amount" class="text-danger"></span>
-                    </div>
-                </div>
+    .profile-preview {
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #eee;
+        transition: 0.3s;
+    }
 
-                <div class="row mb-2">
-                    <label asp-for="CourseId" class="col-form-label col-3"></label>
-                    <div class="col-7">
-                        <select asp-for="CourseId" class="form-select form-select-sm" asp-items="@(new SelectList(ViewBag.courses, "CourseId", "CourseName"))">
-                            <option value="">--------Select-------</option>
+        .profile-preview:hover {
+            transform: scale(1.08);
+        }
+
+    .upload-box {
+        border: 2px dashed #ccc;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .upload-box:hover {
+            border-color: #0d6efd;
+            background: #f8f9ff;
+        }
+
+    .btn-save {
+        border-radius: 50px;
+        padding: 8px 25px;
+        font-weight: 600;
+    }
+
+    .badge-status {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+</style>
+
+<div class="container py-4">
+    <div class="card edit-card p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold text-dark mb-0">✏️ Edit Member</h4>
+            <span class="badge bg-light text-dark">ID: @Model.MemberId</span>
+        </div>
+
+        <form asp-action="Edit" asp-controller="Members" enctype="multipart/form-data" method="post">
+
+            @Html.HiddenFor(x => x.MemberId)
+            @Html.HiddenFor(x => x.Image)
+            @Html.HiddenFor(x => x.EventId)
+
+            <div class="row">
+
+                <div class="col-md-7">
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="RollNo" class="form-label"></label>
+                        <input asp-for="RollNo" class="form-control" />
+                        <span asp-validation-for="RollNo" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Amount" class="form-label"></label>
+                        <input asp-for="Amount" class="form-control" />
+                        <span asp-validation-for="Amount" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CourseId" class="form-label"></label>
+                        <select asp-for="CourseId" class="form-select"
+                                asp-items="@(new SelectList(ViewBag.courses, "CourseId", "CourseName"))">
+                            <option value="">-- Select Course --</option>
                         </select>
                     </div>
-                    <div class="col-2">
-                        <span asp-validation-for="CourseId" class="text-danger"></span>
+
+                    <div class="mb-3">
+                        <label class="form-label">Payment Status</label><br />
+
+                        @if (Model.PaymentDone)
+                        {
+                            <span class="badge bg-success badge-status">Paid</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger badge-status">Unpaid</span>
+                        }
+
+                        @* <span class="badge badge-status @(Model.PaymentDone ? "bg-success" : "bg-danger")">
+                            @(Model.PaymentDone ? "Paid" : "Unpaid")
+                        </span> *@
+
+                        <div class="form-check mt-2">
+                            <input asp-for="PaymentDone" class="form-check-input" />
+                            <label class="form-check-label">Mark as Paid</label>
+                        </div>
                     </div>
+
                 </div>
 
-                <div class="row mb-2">
-                    <label asp-for="ImageFile" class="col-3 col-form-label col-form-label-sm"></label>
-                    <div class="col-7">
-                        <input asp-for="ImageFile" class="form-control form-control-sm" type="file" />
-                    </div>
-                    <div class="col-2">
-                        <span asp-validation-for="ImageFile" class="text-danger"></span>
-                    </div>
-                </div>
+                <div class="col-md-5 text-center">
 
-                <div class="row mb-3">
-                    <label asp-for="PaymentDone" class="col-3 col-form-label col-form-label-sm">
-                        Payment Status
-                    </label>
-                    <div class="col-7 d-flex align-items-center">
-                        <input asp-for="PaymentDone" class="form-check-input me-2" />
-                        <span class="fw-bold text-success">Payment Completed</span>
-                    </div>
-                </div>
+                    <label class="form-label d-block">Profile Image</label>
 
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+                        <img src="@Model.Image" class="profile-preview mb-3" />
+                    }
+                    else
+                    {
+                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mb-3"
+                             style="width:110px;height:110px;margin:auto;">
+                            <i class="fa fa-user text-secondary fa-2x"></i>
+                        </div>
+                    }
+
+                    <div class="upload-box">
+                        <input asp-for="ImageFile" type="file" class="form-control border-0" />
+                        <small class="text-muted">Click to upload new image</small>
+                    </div>
+
+                </div>
             </div>
-        </div>
-        <div class="row d-flex justify-content-end">
-            <div class="col">
-                <input type="submit" value="update Data" class="btn btn-success";/>
+
+            <hr />
+
+            <!-- BUTTONS -->
+            <div class="d-flex justify-content-between mt-3">
+                <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                    ⬅ Back
+                </a>
+
+                <button type="submit" class="btn btn-success btn-save">
+                    💾 Update Member
+                </button>
             </div>
-        </div>
-    </form>
+
+        </form>
+    </div>
 </div>
 
+@section Scripts {
+    <script>
+        document.querySelector('input[type="file"]').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    let img = document.querySelector('.profile-preview');
+
+                    if (!img) {
+                        img = document.createElement("img");
+                        img.classList.add("profile-preview", "mb-3");
+                        document.querySelector(".upload-box").prepend(img);
+                    }
+
+                    img.src = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+    <script>
+        const checkbox = document.querySelector('input[name="PaymentDone"]');
+        const badge = document.querySelector('.badge-status');
+
+        checkbox.addEventListener('change', function () {
+            if (this.checked) {
+                badge.classList.remove('bg-danger');
+                badge.classList.add('bg-success');
+                badge.innerText = "Paid";
+            } else {
+                badge.classList.remove('bg-success');
+                badge.classList.add('bg-danger');
+                badge.innerText = "Unpaid";
+            }
+        });
+    </script>
+}

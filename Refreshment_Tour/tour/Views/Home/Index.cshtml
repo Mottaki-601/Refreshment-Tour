@@ -3,85 +3,245 @@
 }
 
 <style>
-    .hero-section {
-        background: linear-gradient(135deg, #6e8efb, #a777e3);
-        color: white;
-        padding: 100px 0;
-        border-radius: 20px;
-        margin-bottom: 50px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    body {
+        background: #f5f7fb;
     }
 
+    .hero {
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        color: white;
+        padding: 100px 30px;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            animation: fadeInUp 1.5s ease;
+        }
+
+    .btn-hero {
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+        .btn-hero:hover {
+            transform: translateY(-3px);
+        }
+
     .feature-card {
-        transition: transform 0.3s, box-shadow 0.3s;
+        border-radius: 18px;
         border: none;
-        border-radius: 15px;
+        background: white;
+        transition: 0.3s;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.05);
     }
 
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
     .icon-box {
-        font-size: 3rem;
+        font-size: 2.8rem;
+        color: #4e73df;
         margin-bottom: 15px;
-        color: #6e8efb;
     }
 
-    .lead {
-        animation: fadeUp 6s ease-out forwards;
-        opacity: 0;
+    .stats-box {
+        border-radius: 15px;
+        background: white;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     }
 
-    @@keyframes fadeUp {
-        0% {
+    @@keyframes fadeInUp {
+        from {
             opacity: 0;
-            transform: translateY(20px) skewX(-10deg);
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .quran-marquee-wrapper {
+        background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+        border-radius: 12px;
+        padding: 12px 0;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        margin-bottom:20px;
+    }
+
+    .quran-marquee {
+        display: inline-block;
+        white-space: nowrap;
+        animation: scrollText 60s linear infinite;
+        font-size: 1rem;
+        color: #f1f1f1;
+        font-weight: 500;
+    }
+
+        .quran-marquee span {
+            margin-right: 80px;
+        }
+
+    .ayah-arabic {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #ffd369;
+        margin-right: 15px;
+    }
+
+    .ayah-bangla {
+        font-style: italic;
+        color: #ffffff;
+    }
+
+    @@keyframes scrollText {
+        0% {
+            transform: translateX(35%);
         }
 
         100% {
-            opacity: 1;
-            transform: translateY(0) skewX(0deg);
+            transform: translateX(-100%);
         }
     }
 </style>
 
-<div class="container">
-    <div class="hero-section text-center">
-        <marquee behavior="scroll" direction="left" class="display-3 fw-bold">
-            স্বাগতম আমাদের ট্যুর ম্যানেজমেন্টে
-        </marquee>
-        <p class="lead mb-4 cursive-animation">
-            আপনার ভ্রমণকে আরও সহজ এবং স্মরণীয় করে তুলতে আমরা আছি আপনার সাথে।
+<div class="container py-4">
+
+    <div class="hero text-center mb-5">
+        <h1>🌍 Tour Management System</h1>
+        <p class="mt-3">
+            আপনার ভ্রমণ ব্যবস্থাপনাকে আরও স্মার্ট, সহজ এবং কার্যকর করে তুলুন।
         </p>
-        <div class="d-flex justify-content-center gap-3">
-            <a asp-controller="Members" asp-action="Index" class="btn btn-light btn-lg px-4 fw-bold text-primary">মেম্বার লিস্ট</a>
-            <a asp-controller="Gallery" asp-action="Index" class="btn btn-outline-light btn-lg px-4">গ্যালারি দেখুন</a>
+
+        <div class="mt-4 d-flex justify-content-center gap-3">
+            <a asp-controller="Members" asp-action="Index"
+               class="btn btn-light btn-hero text-primary">
+                👥 View Members
+            </a>
+
+            <a asp-controller="Gallery" asp-action="Index"
+               class="btn btn-outline-light btn-hero">
+                📸 Gallery
+            </a>
         </div>
     </div>
 
-    <div class="row text-center mt-5">
+    <div class="quran-marquee-wrapper">
+        <div class="quran-marquee">
+
+            <span>
+                <span class="ayah-arabic">
+                    قُلْ سِيرُوا فِي الْأَرْضِ فَانظُرُوا كَيْفَ بَدَأَ الْخَلْقَ
+                </span>
+                <span class="ayah-bangla">
+                    "বল, তোমরা পৃথিবীতে ভ্রমণ কর এবং দেখো কিভাবে আল্লাহ সৃষ্টির সূচনা করেছেন।"
+                    (সূরা আল-আনকাবুত ২৯:২০)
+                </span>
+            </span>
+
+            <span>
+                <span class="ayah-arabic">
+                    قُلْ سِيرُوا فِي الْأَرْضِ فَانظُرُوا كَيْفَ بَدَأَ الْخَلْقَ
+                </span>
+                <span class="ayah-bangla">
+                    "বল, তোমরা পৃথিবীতে ভ্রমণ কর এবং দেখো কিভাবে আল্লাহ সৃষ্টির সূচনা করেছেন।"
+                    (সূরা আল-আনকাবুত ২৯:২০)
+                </span>
+            </span>
+
+        </div>
+    </div>
+
+    <div class="row text-center mb-5">
         <div class="col-md-4 mb-4">
-            <div class="card feature-card h-100 p-4">
-                <div class="icon-box"><i class="fa fa-users"></i></div>
-                <h3>মেম্বার ম্যানেজমেন্ট</h3>
-                <p class="text-muted">খুব সহজেই মেম্বার যোগ করুন এবং তাদের পেমেন্ট ট্র্যাক করুন।</p>
+            <div class="feature-card p-4 h-100">
+                <div class="icon-box">
+                    <i class="fa fa-users"></i>
+                </div>
+                <h5 class="fw-bold">Member Management</h5>
+                <p class="text-muted small">
+                    সহজে মেম্বার যোগ, এডিট এবং পেমেন্ট স্ট্যাটাস ট্র্যাক করুন।
+                </p>
             </div>
         </div>
+
         <div class="col-md-4 mb-4">
-            <div class="card feature-card h-100 p-4">
-                <div class="icon-box"><i class="fa fa-calculator"></i></div>
-                <h3>অটো ক্যালকুলেশন</h3>
-                <p class="text-muted">খরচ এবং বাকি টাকার হিসাব রাখুন নিমিষেই রিয়েল-টাইম পদ্ধতিতে।</p>
+            <div class="feature-card p-4 h-100">
+                <div class="icon-box">
+                    <i class="fa fa-calculator"></i>
+                </div>
+                <h5 class="fw-bold">Smart Calculation</h5>
+                <p class="text-muted small">
+                    অটো হিসাব: মোট কালেকশন, খরচ এবং ব্যালেন্স এক নজরে।
+                </p>
             </div>
         </div>
+
         <div class="col-md-4 mb-4">
-            <div class="card feature-card h-100 p-4">
-                <div class="icon-box"><i class="fa fa-camera-retro"></i></div>
-                <h3>ফটো গ্যালারি</h3>
-                <p class="text-muted">ভ্রমণের সুন্দর মুহূর্তগুলো ছবির মাধ্যমে সাজিয়ে রাখুন আমাদের গ্যালারিতে।</p>
+            <div class="feature-card p-4 h-100">
+                <div class="icon-box">
+                    <i class="fa fa-camera"></i>
+                </div>
+                <h5 class="fw-bold">Photo Gallery</h5>
+                <p class="text-muted small">
+                    ট্যুরের সুন্দর মুহূর্তগুলো গ্যালারিতে সংরক্ষণ করুন।
+                </p>
             </div>
         </div>
     </div>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <div class="stats-box">
+                <h4 class="fw-bold text-primary">100+</h4>
+                <p class="text-muted small mb-0">Members Managed</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="stats-box">
+                <h4 class="fw-bold text-success">50+</h4>
+                <p class="text-muted small mb-0">Tours Completed</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="stats-box">
+                <h4 class="fw-bold text-danger">100%</h4>
+                <p class="text-muted small mb-0">Data Accuracy</p>
+            </div>
+        </div>
+    </div>
+
 </div>
